@@ -1,5 +1,6 @@
 import React from "react";
 import { Link} from 'react-router-dom';
+import Img from "../Assets/adv-aseets/adv-form-banner.png"
 
 export default function HomePage() {
   return (
@@ -15,7 +16,7 @@ export default function HomePage() {
       </Link>     
 
        <div>
-        <img src="https://static.vecteezy.com/system/resources/previews/024/589/160/non_2x/top-view-pizza-with-ai-generated-free-png.png" />
+        <img className="homePageHalfPizza" src={Img} />
       </div>
     </div>
   );
