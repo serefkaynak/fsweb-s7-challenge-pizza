@@ -12,7 +12,7 @@ export default function HomePage() {
         </div>
 
       <Link to="/order">
-      <button className="button">ACIKTIM</button>
+      <button className="button-homepage">ACIKTIM</button>
       </Link>     
 
        <div>

@@ -34,7 +34,7 @@ h1 {
 
 }
 
-.button {
+.button-homepage{
   border-radius: 20px;
   margin: 10px;
   padding: 10px 45px 10px 45px;
@@ -78,6 +78,7 @@ h1 {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  background-color: #CE2829;
 
 }
 
@@ -104,7 +105,15 @@ h1 {
   padding-bottom: 20px;
 }
 
-.container>div{
+.form-container{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/*
+.container{
 
   background-color: white;
   display: flex;
@@ -116,12 +125,91 @@ h1 {
   padding-left: 30%;
   padding-right: 30%;
 }
+*/
 
-.headerPrice{
+.form-wrapper {
+
   display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: space-between;
-    justify-content: space-between;
+  flex-direction: column;
+  background-color:white;
+  width: 47%;
+
 }
 
+.price-rating-container{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.rating-wrapper{
+
+   width: 25%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.size-dough-selection{
+
+  display: flex;
+  justify-content: flex-start;
+  gap: 47%;
+
+}
+
+.radio-size-selection{
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+
+.extra-checkbox-selection{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 5px;
+  margin-bottom: 60px;
+
+}
+
+.order-note{
+
+width: 99%;
+height: 30px;
+border-radius: 5px;
+}
+
+.hr-style{
+
+  padding: 20px 0px;
+  
+}
+
+.result{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+    
+
+}
+
+.quantify{
+
+}
+
+.totalPrice{
+  
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  width: 40%;
+  gap: 10px;
+
+}
