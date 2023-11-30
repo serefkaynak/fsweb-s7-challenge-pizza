@@ -213,3 +213,9 @@ border-radius: 5px;
   gap: 10px;
 
 }
+
+.price-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
