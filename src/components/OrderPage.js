@@ -1,5 +1,7 @@
 import { getByPlaceholderText } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
+import {Link} from 'react-router-dom';
+import axios from "axios";
 
 export default function OrderPage() {
   
@@ -16,7 +18,41 @@ export default function OrderPage() {
     // }
     
   }
-    
+   
+const [sizeSelection, setSizeSelection]=useState("Küçük (Standart)")
+
+useEffect(
+  ()=>{
+    if (sizeSelection.includes("Küçük (Standart)")){
+      setQuantityPizzaPrice(85.50*quantity)
+    }
+    else if (sizeSelection.includes("Orta (+10TL)"))
+    {
+      setQuantityPizzaPrice(95.50*quantity)
+    }
+    else if (sizeSelection.includes("Büyük (+20 TL)"))
+    {
+      setQuantityPizzaPrice(105.50*quantity)
+    }
+    else {
+      setQuantityPizzaPrice(quantityPizzaPrice)
+    }
+  },[sizeSelection,quantity]
+)
+
+const handleChangeSizeSelection=(e) => {
+  setSizeSelection(e.target.value)
+}
+
+const [doughSelection, setDoughSelection]=useState("Standart")
+
+const handleDoughSelection=(e) => {
+  setDoughSelection(e.target.value)
+}
+
+
+
+
   const [extrasData, setextrasData] = useState({
     Pepperoni: false,
     Tavuk:false,
@@ -52,7 +88,7 @@ export default function OrderPage() {
       setextrasData({
         ...extrasData,
         [name]: type === "checkbox" 
-         ? true
+         ? checked
          : true,
       });
     }else{
@@ -67,7 +103,7 @@ export default function OrderPage() {
     () => {
       setextrasData(extrasData);
       console.log(extrasData)
-    },[extrasData]
+    },[extrasData,quantity]
   )
 
     const increment = (e) => {
@@ -90,8 +126,8 @@ export default function OrderPage() {
     () => {
       let selected= Object.values(extrasData).filter( e => e=== true).length 
       if(selected <= 10){
-      setSelectionPrice(selected*5)}
-  },[extrasData])
+      setSelectionPrice(selected*5*quantity)}
+  },[extrasData, quantity])
 
 
 
@@ -100,6 +136,43 @@ export default function OrderPage() {
     () => {
       setTotal(quantityPizzaPrice + selectionPrice)  
   },[quantityPizzaPrice, selectionPrice])
+
+const [formData,setFormData]=useState({
+  quantity:"",
+  sizeSelection:"",
+  doughSelection:"",
+  extrasData:"",
+  quantityPizzaPrice:"",
+  total:"",
+  selectionPrice:"",
+})
+
+useEffect(
+  () => {
+    setFormData((e)=>({...e,quantity:quantity}))
+    setFormData((e)=>({...e,sizeSelection:sizeSelection}))
+    setFormData((e)=>({...e,doughSelection:doughSelection}))
+    setFormData((e)=>({...e,extrasData:extrasData}))
+    setFormData((e)=>({...e,quantityPizzaPrice:quantityPizzaPrice}))
+    setFormData((e)=>({...e,total:total}))
+    setFormData((e)=>({...e,selectionPrice:selectionPrice}))
+  },
+
+  [quantity,sizeSelection,doughSelection,extrasData,quantityPizzaPrice,total,selectionPrice]
+)
+const apiUrl = "https://reqres.in/api/users";
+
+const handleSubmit=(e)=>{
+  e.preventDefault();
+  console.log(formData)
+  axios.post(apiUrl,formData)
+  .then((response) =>{
+    console.log(response.data);
+  })
+  .catch((error)=>{
+    console.log(error)
+  })
+}
 
   return (
     <div>
@@ -132,7 +205,7 @@ export default function OrderPage() {
             kökenli lezzetli bir yemektir. Küçük bir pizzaya bazen pizzetta
             denir.
           </p>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="size-dough-selection">
               <div className="size-selection">
                 <h3>
@@ -141,16 +214,16 @@ export default function OrderPage() {
 
                 <div className="radio-size-selection">
                   <label>
-                    <input type="radio" name="size"></input>
-                    Küçük
+                    <input type="radio" name="size" checked={sizeSelection==="Küçük (Standart)" } value="Küçük (Standart)" onChange={handleChangeSizeSelection}></input>
+                    Küçük {"(Standart)"}
                   </label>
                   <label>
-                    <input type="radio" name="size"></input>
-                    Orta
+                    <input type="radio" name="size"checked={sizeSelection==="Orta (+10TL)"} value="Orta (+10TL)" onChange={handleChangeSizeSelection}></input>
+                    Orta {"(+10TL)"}
                   </label>
                   <label>
-                    <input type="radio" name="size"></input>
-                    Büyük
+                    <input type="radio" name="size"checked={sizeSelection==="Büyük (+20 TL)"} value="Büyük (+20 TL)" onChange={handleChangeSizeSelection}></input>
+                    Büyük {"(+20TL)"}
                   </label>
                 </div>
               </div>
@@ -159,11 +232,11 @@ export default function OrderPage() {
                   Hamur Seç <span style={{ color: "red" }}>*</span>
                 </h3>
                 <label>                                                                                                                                     
-                  <select>
-                    <option>State oluşturulacak</option>
-                    <option>İnce</option>
-                    <option>Standart</option>
-                    <option>Kalın</option>
+                  <select onChange={handleDoughSelection}>
+                    <option>Hamur Kalınlığı</option>
+                    <option value="İnce" >İnce</option>
+                    <option value="Standart">Standart</option>
+                    <option value="Kalın">Kalın</option>
                   </select>
                 </label>
               </div>
@@ -252,8 +325,9 @@ export default function OrderPage() {
                     Toplam <span>{total}₺</span>
                   </div>
                 </div>
-
-                <button>SİPARİŞ VER</button>
+                {/* <Link to="/success"> */}
+                <button type ="submit" >SİPARİŞ VER</button>
+                {/* </Link> */}
               </div>
             </div>
           </form>
