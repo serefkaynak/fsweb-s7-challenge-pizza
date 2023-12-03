@@ -14,14 +14,12 @@
 }
 
 h1 {
-
   padding: 20px;
   color: white;
 }
 
 
 .containerAlign{
-
   padding: 10px;
   font-size: 43px;
   display: flex;
@@ -31,7 +29,6 @@ h1 {
   justify-content: center;
   align-items: center;
   color: white;
-
 }
 
 .button-homepage{
@@ -106,10 +103,11 @@ h1 {
 }
 
 .form-container{
-    background-color: white;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-bottom: 20px;
 }
 
 /*
@@ -159,7 +157,7 @@ h1 {
   display: flex;
   justify-content: flex-start;
   gap: 47%;
-
+  padding-bottom: 10px;
 }
 
 .radio-size-selection{
@@ -175,29 +173,26 @@ h1 {
   grid-template-columns: repeat(3, 1fr); 
   gap: 5px;
   margin-bottom: 60px;
-
+  font-weight: 500;
 }
 
-.order-note{
-
-width: 99%;
-height: 30px;
-border-radius: 5px;
-}
-
-.hr-style{
-
-  padding: 20px 0px;
+.extra-checkbox-selection>input{
   
 }
 
-.result{
+.order-note{
+width: 99%;
+height: 45px;
+}
 
+.hr-style{
+  padding: 20px 0px;
+}
+
+.result{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-    
-
 }
 
 .quantify{
@@ -205,17 +200,48 @@ border-radius: 5px;
 }
 
 .totalPrice{
-  
   display: flex;
   flex-direction: column;
   align-content: flex-start;
   width: 40%;
+  grid-gap: 10px;
   gap: 10px;
-
+  padding: 20px;
+  border: 2px solid #e3e3e3;
+  border-radius: 4px;
 }
 
 .price-wrapper{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: 600;
+  color: dimgrey;
+}
+
+.price-total-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  color: red;
+  margin-top: 10px;
+}
+
+.order-button {
+  padding: 10px;
+  background-color: orange;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  font-size: large;
+}
+
+.order-button:hover {
+  padding: 10px;
+  background-color: rgb(254, 187, 63);
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  font-size: large;
 }
