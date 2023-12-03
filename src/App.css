@@ -42,12 +42,10 @@ h1 {
 
 
 .homePageHalfPizza{
-
   transform: rotate(180deg) scale(1.5);
-  margin-top: 40%;
-  
-
+  margin-top: 30%;
 }
+
 .button:hover{
   background: #c29e1a ;
 }
@@ -244,4 +242,12 @@ height: 45px;
   border: none;
   font-weight: bold;
   font-size: large;
+}
+
+.success-context{
+  border: 2px solid whitesmoke;
+  padding: 10px;
+  border-radius: 4px;
+  color: whitesmoke;
+  margin-bottom: 20px;
 }

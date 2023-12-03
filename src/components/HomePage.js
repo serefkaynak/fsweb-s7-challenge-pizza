@@ -5,19 +5,23 @@ import Img from "../Assets/adv-aseets/adv-form-banner.png"
 export default function HomePage() {
   return (
     <div className="maindivcenter">
-      <h1>Teknolojik Yemekler</h1>
-      <div className="containerAlign">
+      <header>
+        <h1>Teknolojik Yemekler</h1>
+      </header>
+      <section className="containerAlign">
         <div>KOD ACIKTIRIR </div>
         <div>PIZZA, DOYURUR</div>
-        </div>
+      </section>
 
+      <section>
       <Link to="/order">
       <button className="button-homepage">ACIKTIM</button>
       </Link>     
+      </section>
 
-       <div>
+       <figure>
         <img className="homePageHalfPizza" src={Img} />
-      </div>
+      </figure>
     </div>
   );
 }

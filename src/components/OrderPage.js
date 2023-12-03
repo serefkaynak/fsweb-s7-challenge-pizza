@@ -2,6 +2,7 @@ import { getByPlaceholderText } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
 
 export default function OrderPage() {
@@ -28,9 +29,7 @@ export default function OrderPage() {
     Sucuk: false,
   });
   const [extrasCount, setExtrasCount] = useState(0);
-
-  //Aşağıda yorum satırlarını doldur, her fonksiyonun ne olduğunu açıkla
-
+  const history = useHistory();
 
   useEffect(() => {
     if (sizeSelection.includes("Küçük (Standart)")) {
@@ -128,17 +127,21 @@ export default function OrderPage() {
     selectionPrice,
   ]);
 
-  const apiUrl = "https://reqres.in/api/users";
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    const apiUrl = "https://reqres.in/api/users";
+
     axios
       .post(apiUrl, formData)
       .then((response) => {
-        console.log(response.data);
+        history.push({
+          pathname: "/success",
+          state: { formData: formData },
+        });
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Error submitting order:", error);
       });
   };
 
@@ -146,7 +149,7 @@ export default function OrderPage() {
     <div>
       <div className="orderPageHeader">
         <h1>Teknolojik Yemekler</h1>
-        <div>
+        <div style={{marginRight:"33%"}}>
           Anasayfa -{" "}
           <span style={{ color: "white", fontWeight: "bold" }}>
             Sipariş Oluştur
@@ -156,15 +159,15 @@ export default function OrderPage() {
 
       <div className="form-container">
         <div className="form-wrapper">
-          <h2 >Position Absolute Acı Pizza</h2>
+          <h2>Position Absolute Acı Pizza</h2>
           <div className="price-rating-container">
             <h2>{quantityPizzaPrice}₺</h2>
             <div className="rating-wrapper">
-              <span style={{color: "gray"}}>4.9</span>
-              <span style={{color: "gray"}}>(200)</span>
+              <span style={{ color: "gray" }}>4.9</span>
+              <span style={{ color: "gray" }}>(200)</span>
             </div>
           </div>
-          <p style={{color:"gray"}}>
+          <p style={{ color: "gray" }}>
             Frontent Dev olarak hala position:absolute kullanıyorsan bu çok acı
             pizza tam sana göre. Pizza, domates, peynir ve genellikle çeşitli
             diğer malzemelerle kaplanmış, daha sonra geleneksel olarak odun
@@ -176,7 +179,7 @@ export default function OrderPage() {
           <form onSubmit={handleSubmit}>
             <div className="size-dough-selection">
               <div className="size-selection">
-                <h3 >
+                <h3>
                   Boyut Seç <span style={{ color: "red" }}>*</span>
                 </h3>
 
@@ -227,10 +230,16 @@ export default function OrderPage() {
                 </label>
               </div>
             </div>
-            <div style={{marginBottom: "10px"}}>
+            <div style={{ marginBottom: "10px" }}>
               <h3>Ek Malzemeler</h3>
-              <span style={{color: "gray", fontSize:"small"}}> · En fazla 10 malzeme seçebilirsiniz.5₺</span>
-              <span style={{color: "gray", fontSize:"small"}}> · Seçilen {extrasCount}/10</span>
+              <span style={{ color: "gray", fontSize: "small" }}>
+                {" "}
+                · En fazla 10 malzeme seçebilirsiniz.5₺
+              </span>
+              <span style={{ color: "gray", fontSize: "small" }}>
+                {" "}
+                · Seçilen {extrasCount}/10
+              </span>
             </div>
             <div className="extra-checkbox-selection">
               <label>
@@ -375,9 +384,21 @@ export default function OrderPage() {
             </div>
             <div className="result">
               <div className="quantify">
-                <button className="order-button" onClick={decrement}>-</button>
-                <span style={{margin: "10px", fontSize:"large",fontWeight:"600"}}>{quantity}</span>
-                <button className="order-button" onClick={increment}>+</button>
+                <button className="order-button" onClick={decrement}>
+                  -
+                </button>
+                <span
+                  style={{
+                    margin: "10px",
+                    fontSize: "large",
+                    fontWeight: "600",
+                  }}
+                >
+                  {quantity}
+                </span>
+                <button className="order-button" onClick={increment}>
+                  +
+                </button>
               </div>
 
               <div className="totalPrice">
@@ -394,16 +415,14 @@ export default function OrderPage() {
                     Toplam <span>{total}₺</span>
                   </div>
                 </div>
-                {/* <Link to="/success"> */}
-                <button 
-                className="order-button"
+                <Link
+                  to="/success"
+                  className="order-button"
                   type="submit"
                   onClick={handleSubmit}
-                  disabled={quantity === 0}
-                  >
-                    Sipariş Ver
-                </button>
-                {/* </Link> */}
+                >
+                  Sipariş Ver
+                </Link>
               </div>
             </div>
           </form>
