@@ -1,11 +1,11 @@
 import { getByPlaceholderText } from "@testing-library/react";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
 
 
 export default function OrderPage() {
+
   const [quantity, setQuantity] = useState(1);
   const [sizeSelection, setSizeSelection] = useState("Küçük (Standart)");
   const [doughSelection, setDoughSelection] = useState("Standart");
@@ -29,6 +29,8 @@ export default function OrderPage() {
     Sucuk: false,
   });
   const [extrasCount, setExtrasCount] = useState(0);
+  const [pizzaSelectionName, setPizzaSelectionName] = useState("Position Absolute Acı Pizza")
+  const [pizzaOrderNote, setPizzaOrderNote] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -40,8 +42,11 @@ export default function OrderPage() {
       setQuantityPizzaPrice(105.5 * quantity);
     } else {
       setQuantityPizzaPrice(quantityPizzaPrice);
+    }}, [sizeSelection, quantity]);
+
+    const handleNoteChange = (e) => {
+      setPizzaOrderNote(e.target.value);
     }
-  }, [sizeSelection, quantity]);
 
   const handleChangeSizeSelection = (e) => {
     setSizeSelection(e.target.value);
@@ -85,10 +90,6 @@ export default function OrderPage() {
   };
 
   useEffect(() => {
-    setQuantityPizzaPrice(quantity * 85.5);
-  }, [quantity]);
-
-  useEffect(() => {
     let selected = Object.values(extrasData).filter((e) => e === true).length;
     if (selected <= 10) {
       setSelectionPrice(selected * 5 * quantity);
@@ -107,6 +108,8 @@ export default function OrderPage() {
     quantityPizzaPrice: "",
     total: "",
     selectionPrice: "",
+    pizzaSelectionName: "",
+    pizzaOrderNote: "",
   });
 
   useEffect(() => {
@@ -117,6 +120,8 @@ export default function OrderPage() {
     setFormData((e) => ({ ...e, quantityPizzaPrice: quantityPizzaPrice }));
     setFormData((e) => ({ ...e, total: total }));
     setFormData((e) => ({ ...e, selectionPrice: selectionPrice }));
+    setFormData((e) => ({ ...e, pizzaSelectionName: pizzaSelectionName}));
+    setFormData((e) => ({ ...e, pizzaOrderNote: pizzaOrderNote}));
   }, [
     quantity,
     sizeSelection,
@@ -125,9 +130,10 @@ export default function OrderPage() {
     quantityPizzaPrice,
     total,
     selectionPrice,
+    pizzaSelectionName,
+    pizzaOrderNote,
   ]);
 
- 
   const handleSubmit = (e) => {
     e.preventDefault();
     const apiUrl = "https://reqres.in/api/users";
@@ -159,7 +165,7 @@ export default function OrderPage() {
 
       <div className="form-container">
         <div className="form-wrapper">
-          <h2>Position Absolute Acı Pizza</h2>
+          <h2>{pizzaSelectionName}</h2>
           <div className="price-rating-container">
             <h2>{quantityPizzaPrice}₺</h2>
             <div className="rating-wrapper">
@@ -376,8 +382,11 @@ export default function OrderPage() {
                   type="text"
                   placeholder="Siparişinize eklemek istediğiniz bir not var mı?"
                   className="order-note"
+                  onChange={handleNoteChange}
                 ></input>
               </label>
+            </div>
+            <div>
             </div>
             <div className="hr-style">
               <hr></hr>
@@ -387,13 +396,7 @@ export default function OrderPage() {
                 <button className="order-button" onClick={decrement}>
                   -
                 </button>
-                <span
-                  style={{
-                    margin: "10px",
-                    fontSize: "large",
-                    fontWeight: "600",
-                  }}
-                >
+                <span style={{margin: "10px",fontSize: "large",fontWeight: "600",}}>
                   {quantity}
                 </span>
                 <button className="order-button" onClick={increment}>
@@ -415,14 +418,9 @@ export default function OrderPage() {
                     Toplam <span>{total}₺</span>
                   </div>
                 </div>
-                <Link
-                  to="/success"
-                  className="order-button"
-                  type="submit"
-                  onClick={handleSubmit}
-                >
+                <button className="order-button" type="submit">
                   Sipariş Ver
-                </Link>
+                </button>
               </div>
             </div>
           </form>

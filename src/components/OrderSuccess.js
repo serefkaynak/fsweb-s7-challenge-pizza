@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export default function OrderSuccess() {
   const location = useLocation();
   const formData = location.state.formData;
+  console.log(formData);
 
   return (
     <div className="maindivcenter">
@@ -18,13 +19,18 @@ export default function OrderSuccess() {
         <hr/>
         </div>
         <div className="success-context">
+        <p style={{fontWeight: "900"}}>{formData.pizzaSelectionName}</p>
         <p>Sipariş Tutarı: {formData.total}₺</p>
         <p>Seçimler Tutarı: {formData.selectionPrice}₺</p>
         <p>Pizza Tutarı: {formData.quantityPizzaPrice}₺</p>
         <p>Adet: {formData.quantity}</p>
         <p>Boyut Seçimi: {formData.sizeSelection}</p>
         <p>Hamur Seçimi: {formData.doughSelection}</p>
-      </div>
+        <p>Sipariş Notu:
+          {formData.pizzaOrderNote}
+          {formData.pizzaOrderNote === "" ? "(Not Yok)" : ""} 
+        </p>
+      </div>  
       <Link to="/" >
         <button className="order-button">Ana Sayfaya Dön</button>
       </Link>
