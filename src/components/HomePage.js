@@ -1,6 +1,9 @@
 import React from "react";
 import { Link} from 'react-router-dom';
-import Img from "../Assets/adv-aseets/adv-form-banner.png"
+import Img from "../Assets/adv-aseets/adv-form-banner.png";
+import Button from '@atlaskit/button';
+
+
 
 export default function HomePage() {
   return (
@@ -15,9 +18,14 @@ export default function HomePage() {
 
       <section>
       <Link to="/order">
-      <button className="button-homepage">ACIKTIM</button>
-      </Link>     
-      </section>
+      <Button
+        appearance="primary"
+        onClick={() => console.log('Clicked')}
+        className="button-homepage"
+        >ACIKTIM
+      </Button>
+      </Link>
+        </section>
 
        <figure>
         <img className="homePageHalfPizza" src={Img} />
